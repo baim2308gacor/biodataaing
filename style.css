@@ -1,0 +1,696 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #f8fafc;
+    line-height: 1.7;
+}
+
+/* NAVBAR BARU */
+nav {
+    background: #111c32;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-bottom: 1px solid #293650;
+}
+
+.logo {
+    color: #38bdf8;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+nav ul a {
+    display: inline-block;
+    padding: 9px 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.25s;
+}
+
+nav ul a:hover {
+    background: #1e293b;
+    color: #38bdf8;
+    border-color: #334155;
+}
+
+nav ul a.active {
+    background: #38bdf8;
+    color: #0f172a;
+    font-weight: bold;
+}
+
+/* KONTEN */
+main {
+    width: 84%;
+    max-width: 1000px;
+    min-height: 75vh;
+    margin: 55px auto;
+}
+
+.hero,
+.card {
+    background: #172238;
+    padding: 30px;
+    border: 1px solid #293650;
+    border-radius: 15px;
+    margin-bottom: 22px;
+}
+
+.hero {
+    text-align: center;
+    padding: 65px 25px;
+    background: radial-gradient(circle at top, #1e3a5f, #172238);
+}
+
+.avatar {
+    font-size: 65px;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: clamp(30px, 5vw, 44px);
+    margin-bottom: 12px;
+}
+
+h2 {
+    color: #38bdf8;
+    margin-bottom: 18px;
+}
+
+p {
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.highlight {
+    color: #38bdf8;
+}
+
+/* TOMBOL */
+.button {
+    display: inline-block;
+    background: #38bdf8;
+    color: #0f172a;
+    padding: 11px 20px;
+    margin: 7px 5px 0 0;
+    border: 2px solid #38bdf8;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.button:hover {
+    background: transparent;
+    color: #38bdf8;
+    transform: translateY(-2px);
+}
+
+.button.secondary {
+    background: transparent;
+    color: #38bdf8;
+}
+
+/* BIODATA */
+.profile-list {
+    list-style: none;
+}
+
+.profile-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.profile-list li:last-child {
+    border-bottom: none;
+}
+
+.profile-list strong {
+    color: #38bdf8;
+}
+
+.profile-list span {
+    text-align: right;
+}
+
+/* KARTU HOBI DAN KONTEN */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    margin-bottom: 0;
+    transition: 0.25s;
+}
+
+.card:hover {
+    border-color: #38bdf8;
+    transform: translateY(-4px);
+}
+
+.emoji {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 24px;
+    color: #94a3b8;
+    background: #0b1120;
+}
+
+#pesan {
+    margin-top: 15px;
+    color: #38bdf8;
+}
+
+/* TAMPILAN HP */
+@media (max-width: 700px) {
+    nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 18px 12px;
+    }
+
+    nav ul {
+        width: 100%;
+        gap: 8px;
+    }
+
+    nav ul a {
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+
+    main {
+        width: 90%;
+        margin: 30px auto;
+    }
+
+    .hero,
+    .card {
+        padding: 24px;
+    }
+
+    .profile-list li {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .profile-list span {
+        text-align: left;
+    }
+}
+
+/* NAVBAR - TOMBOL BERJEJER RAPI */
+nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 22px 15px;
+    background: #111c32;
+    border-bottom: 1px solid #293650;
+}
+
+.logo {
+    color: #38bdf8;
+    font-size: 26px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    list-style: none;
+    width: 100%;
+}
+
+nav ul li {
+    flex: 0 1 125px;
+    min-width: 0;
+}
+
+nav ul a {
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    text-align: center;
+    white-space: nowrap;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+nav ul a:hover {
+    background: #1e293b;
+    color: #38bdf8;
+    border-color: #38bdf8;
+}
+
+nav ul a.active {
+    background: #38bdf8;
+    color: #0f172a;
+    border-color: #38bdf8;
+    font-weight: bold;
+}
+
+/* Tampilan HP */
+@media (max-width: 500px) {
+    nav ul {
+        gap: 5px;
+    }
+
+    nav ul li {
+        flex: 1 1 0;
+    }
+
+    nav ul a {
+        font-size: 10px;
+        padding: 9px 2px;
+        white-space: normal;
+    }
+}
+
+/* FOTO PROFIL BERANDA */
+.avatar {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #38bdf8;
+    box-shadow: 0 0 25px #38bdf855;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.social-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.whatsapp {
+    background: #25D366;
+}
+
+.instagram {
+    background: #E1306C;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    opacity: 0.85;
+}
+/* HALAMAN HOBI */
+.hobby-container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.hobby-intro {
+    color: #cbd5e1;
+    margin-bottom: 35px;
+    line-height: 1.7;
+}
+
+.hobby-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.hobby-card {
+    background: #111827;
+    border: 1px solid #263449;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: left;
+    text-decoration: none;
+    color: #f8fafc;
+    transition: transform 0.25s, border-color 0.25s;
+}
+
+.hobby-card:hover {
+    transform: translateY(-6px);
+    border-color: #38bdf8;
+}
+
+.hobby-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+}
+
+.hobby-info {
+    padding: 20px;
+}
+
+.hobby-info h2 {
+    margin-top: 0;
+}
+
+.hobby-info p {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.hobby-info span {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+/* HALAMAN DETAIL HOBI */
+.hobby-detail {
+    max-width: 800px;
+    margin: 45px auto;
+    padding: 25px;
+    color: #f8fafc;
+    line-height: 1.8;
+}
+
+.hobby-detail > img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 1px solid #263449;
+}
+
+.hobby-detail h1 {
+    color: #38bdf8;
+    margin-top: 25px;
+}
+
+.hobby-detail p {
+    color: #cbd5e1;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 11px 18px;
+    background: #38bdf8;
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 9px;
+    transition: 0.2s;
+}
+
+.back-button:hover {
+    opacity: 0.85;
+}
+
+/* TAMPILAN HP */
+@media (max-width: 750px) {
+    .hobby-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hobby-card img {
+        height: 220px;
+    }
+
+    .hobby-container {
+        margin-top: 25px;
+        padding: 15px;
+    }
+
+    .hobby-detail {
+        margin: 20px auto;
+        padding: 18px;
+    }
+}
+/* Memperbaiki tombol navigasi */
+/* Navbar berjajar ke samping */
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding: 18px 10px;
+}
+
+.navbar a {
+    display: inline-block;
+    flex: 0 0 auto;
+    color: #f8fafc;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #1e293b;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    background: #38bdf8;
+    color: #0f172a;
+}
+
+/* Agar muat di layar HP */
+@media (max-width: 500px) {
+    .navbar {
+        gap: 5px;
+        padding: 12px 5px;
+    }
+
+    .navbar a {
+        padding: 8px 7px;
+        font-size: 12px;
+    }
+}
+
+/* Animasi saat halaman dibuka */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Konten muncul perlahan */
+body {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Efek tombol navigasi */
+.navbar a {
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.navbar a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 15px #38bdf880;
+}
+
+/* Efek kartu hobi */
+.hobby-card {
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.hobby-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px #38bdf830;
+}
+
+/* Efek foto hobi */
+.hobby-photos img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.hobby-photos img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #38bdf860;
+}
+
+/* Mengurangi animasi jika pengguna memilihnya */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* BACKGROUND FUTURISTIK */
+body {
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(14, 165, 233, 0.16),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 70%,
+            rgba(37, 99, 235, 0.18),
+            transparent 40%
+        ),
+        #020617;
+    background-attachment: fixed;
+    color: #f8fafc;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Cahaya biru bergerak */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    z-index: -1;
+    pointer-events: none;
+
+    background: radial-gradient(
+        circle,
+        rgba(56, 189, 248, 0.12) 0%,
+        rgba(37, 99, 235, 0.05) 25%,
+        transparent 55%
+    );
+
+    animation: blueGlow 12s ease-in-out infinite alternate;
+}
+
+@keyframes blueGlow {
+    0% {
+        transform: translate(-8%, -5%) scale(0.9);
+    }
+    50% {
+        transform: translate(8%, 5%) scale(1.1);
+    }
+    100% {
+        transform: translate(-3%, 8%) scale(1);
+    }
+}
+
+/* Pola garis halus di background */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        linear-gradient(
+            rgba(56, 189, 248, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(56, 189, 248, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+}
+
+/* Animasi lebih tenang untuk pengguna yang memilih
+   pengurangan gerakan */
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none;
+    }
+}
+
+/* Canvas partikel */
+#particles-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Konten tetap berada di depan partikel */
+body > *:not(#particles-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Pastikan background lama tetap di belakang */
+body {
+    isolation: isolate;
+}
