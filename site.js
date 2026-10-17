@@ -249,7 +249,6 @@
         window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
         markCurrentNavigation();
         mountScrollReveal();
-        enhanceEditorialReveal();
         document.body.classList.remove('page-changing');
         document.body.classList.add('page-changed');
         window.setTimeout(() => document.body.classList.remove('page-changed'), 420);
@@ -290,48 +289,10 @@
         document.title = nextDoc.title || document.title;
         markCurrentNavigation();
         mountScrollReveal();
-        enhanceEditorialReveal();
         window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
         window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: location.href } }));
       } catch (_) { location.reload(); }
     });
-  }
-
-  function enhanceEditorialReveal() {
-    if (REDUCED_MOTION.matches || !('IntersectionObserver' in window)) return;
-    const main = document.querySelector('main');
-    if (!main) return;
-    document.documentElement.classList.add('reveal-ready');
-    const targets = main.querySelectorAll('section, .card, article, figure, h1, h2, .avatar, li');
-    targets.forEach((node, index) => {
-      if (node.closest('[data-no-reveal]')) return;
-      node.dataset.reveal = 'true';
-      node.style.transitionDelay = `${Math.min(index % 5, 4) * 55}ms`;
-    });
-    // Fail-safe for mobile browsers that delay/suspend IntersectionObserver.
-    // Motion must never be able to keep the actual page hidden indefinitely.
-    window.setTimeout(() => {
-      document.documentElement.classList.remove('reveal-ready');
-      document.querySelectorAll('[data-reveal]').forEach((node) => {
-        node.classList.add('is-visible');
-        node.style.opacity = '1';
-        node.style.transform = 'none';
-        node.style.filter = 'none';
-      });
-      document.querySelectorAll('.reveal-ready').forEach((node) => {
-        node.classList.add('is-in-view');
-        node.style.opacity = '1';
-        node.style.transform = 'none';
-      });
-    }, 2200);
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
-    targets.forEach((node) => observer.observe(node));
   }
 
   function boot() {
@@ -340,7 +301,6 @@
     mountBackToTop();
     markCurrentNavigation();
     mountScrollReveal();
-    enhanceEditorialReveal();
     mountSoftNavigation();
     page.classList.add('interface-ready');
   }
