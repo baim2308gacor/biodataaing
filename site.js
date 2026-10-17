@@ -308,6 +308,22 @@
       node.dataset.reveal = 'true';
       node.style.transitionDelay = `${Math.min(index % 5, 4) * 55}ms`;
     });
+    // Fail-safe for mobile browsers that delay/suspend IntersectionObserver.
+    // Motion must never be able to keep the actual page hidden indefinitely.
+    window.setTimeout(() => {
+      document.documentElement.classList.remove('reveal-ready');
+      document.querySelectorAll('[data-reveal]').forEach((node) => {
+        node.classList.add('is-visible');
+        node.style.opacity = '1';
+        node.style.transform = 'none';
+        node.style.filter = 'none';
+      });
+      document.querySelectorAll('.reveal-ready').forEach((node) => {
+        node.classList.add('is-in-view');
+        node.style.opacity = '1';
+        node.style.transform = 'none';
+      });
+    }, 2200);
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
