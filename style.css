@@ -1261,3 +1261,11 @@ footer { margin-top: clamp(40px, 7vw, 90px); padding: 28px var(--gutter); border
   .avatar::after { animation: none; }
   .reveal-ready [data-reveal] { opacity: 1; transform: none; filter: none; transition: none; }
 }
+
+/* PRO MAX emergency visibility guard: animation can never blank the page. */
+@media (max-width: 760px) {
+  html.reveal-ready main [data-reveal] { animation: pro-mobile-reveal-guard 2.4s steps(1, end) forwards; }
+}
+@keyframes pro-mobile-reveal-guard {
+  to { opacity: 1; transform: none; filter: none; }
+}
