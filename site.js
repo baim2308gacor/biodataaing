@@ -1,11 +1,3 @@
-/* =======================================================================
-   AING / FUTURE INTERFACE LAYER
-   Shared non-framework enhancements for every portfolio page except My Love.
-   - One native audio element per document (never autoplay)
-   - Reading progress and back-to-top controls
-   - Small navigation / scroll affordances
-   - Reduced-motion and visibility-aware behavior
-   ======================================================================= */
 (() => {
   'use strict';
 
@@ -21,7 +13,35 @@
     return element;
   };
 
-  /* -------------------------- Floating music dock ----------------------- */
+    function mountThemeToggle() {
+    const nav = document.querySelector('nav');
+    if (!nav || nav.querySelector('.theme-toggle')) return;
+    const button = create('button', 'theme-toggle');
+    button.type = 'button';
+    button.setAttribute('aria-label', 'Switch color theme');
+    const icon = create('i', 'fa-solid fa-moon');
+    icon.setAttribute('aria-hidden', 'true');
+    const label = create('span', '', 'Dark mode');
+    button.append(icon, label);
+    nav.appendChild(button);
+
+    let saved = 'light';
+    try { saved = localStorage.getItem('portfolio-theme') || 'light'; } catch (_) {}
+    const apply = (theme) => {
+      document.documentElement.dataset.theme = theme;
+      const dark = theme === 'dark';
+      icon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      label.textContent = dark ? 'Light mode' : 'Dark mode';
+      button.setAttribute('aria-pressed', String(dark));
+      button.title = dark ? 'Switch to white mode' : 'Switch to black mode';
+    };
+    apply(saved === 'dark' ? 'dark' : 'light');
+    button.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      apply(next);
+      try { localStorage.setItem('portfolio-theme', next); } catch (_) {}
+    });
+  }
   function mountMusicDock() {
     if (document.querySelector('[data-global-music-dock]')) return;
 
@@ -31,7 +51,7 @@
 
     const audio = create('audio', 'sonic-audio');
     audio.preload = 'none';
-    audio.loop = false;
+    audio.loop = true;
     audio.src = MUSIC_SOURCE;
     audio.setAttribute('aria-label', 'Portfolio background music');
 
@@ -123,7 +143,7 @@
     });
   }
 
-  /* ------------------------ Scroll progress line ----------------------- */
+
   function mountReadingProgress() {
     if (document.querySelector('.scroll-signal')) return;
     const signal = create('div', 'scroll-signal');
@@ -149,7 +169,6 @@
     update();
   }
 
-  /* -------------------------- Back-to-top ------------------------------ */
   function mountBackToTop() {
     if (document.querySelector('.back-to-top')) return;
     const button = create('button', 'back-to-top', '↑');
@@ -174,8 +193,7 @@
     update();
   }
 
-  /* ------------------------- Active navigation ------------------------- */
-  function normalizePath(path) {
+ function normalizePath(path) {
     return path.split('/').pop() || 'index.html';
   }
 
@@ -190,7 +208,6 @@
     });
   }
 
-  /* ---------------------- Scroll reveal, progressive ------------------- */
   function mountScrollReveal() {
     if (REDUCED_MOTION.matches || !('IntersectionObserver' in window)) return;
     const candidates = document.querySelectorAll('main > section, .hobby-card, .hobby-detail > img, .love-section');
@@ -209,9 +226,6 @@
     candidates.forEach((element) => observer.observe(element));
   }
 
-  /* ---------------- Persistent audio navigation ---------------------- */
-  // Internal page changes are fetched and swapped without unloading this document.
-  // The audio element, particle canvas and floating dock therefore remain alive.
   let navigationBusy = false;
   function mountSoftNavigation() {
     document.addEventListener('click', async (event) => {
@@ -235,7 +249,7 @@
         const currentMain = document.querySelector('main');
         if (!nextMain || !currentMain) throw new Error('Page layout not compatible');
 
-        // Swap only page content; shared audio and canvas are intentionally untouched.
+
         const nextNav = nextDoc.querySelector('nav');
         const currentNav = document.querySelector('nav');
         if (nextNav && currentNav) currentNav.replaceWith(document.importNode(nextNav, true));
@@ -248,11 +262,12 @@
         history.pushState({ portfolio: true }, '', url.href);
         window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
         markCurrentNavigation();
+        mountThemeToggle();
         mountScrollReveal();
         document.body.classList.remove('page-changing');
         document.body.classList.add('page-changed');
         window.setTimeout(() => document.body.classList.remove('page-changed'), 420);
-        // Run inline scripts from the incoming page (e.g. contact-page actions).
+
         nextDoc.querySelectorAll('main script, body > script:not([src])').forEach((oldScript) => {
           const script = document.createElement('script');
           for (const attr of oldScript.attributes) script.setAttribute(attr.name, attr.value);
@@ -262,7 +277,6 @@
         });
         window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: url.href } }));
       } catch (error) {
-        // Reliable fallback: a normal navigation is preferable to a broken page.
         location.href = url.href;
       } finally {
         navigationBusy = false;
@@ -271,7 +285,6 @@
     });
 
     window.addEventListener('popstate', async () => {
-      // Back/forward swap content too, keeping the existing audio element alive.
       try {
         const response = await fetch(location.href, { headers: { 'X-Requested-With': 'portfolio-navigation' } });
         if (!response.ok) throw new Error('History navigation failed');
@@ -288,6 +301,7 @@
         if (nextFooter && currentFooter) currentFooter.replaceWith(document.importNode(nextFooter, true));
         document.title = nextDoc.title || document.title;
         markCurrentNavigation();
+        mountThemeToggle();
         mountScrollReveal();
         window.scrollTo({ top: 0, behavior: REDUCED_MOTION.matches ? 'auto' : 'smooth' });
         window.dispatchEvent(new CustomEvent('portfolio:pagechange', { detail: { url: location.href } }));
@@ -296,6 +310,7 @@
   }
 
   function boot() {
+    mountThemeToggle();
     mountMusicDock();
     mountReadingProgress();
     mountBackToTop();
